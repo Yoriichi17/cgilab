@@ -1,0 +1,53 @@
+//2
+#include <GL/glut.h>
+#include <GL/glu.h>
+#include <GL/gl.h>
+
+GLfloat triangle[3][2] = {{0.0, -2.0}, {2.0, -2.0}, {1.0, 0.0}};
+GLfloat tx = 2.0 , ty = 0.5;
+GLfloat angle = 45.0;
+GLfloat sx = 2.0 , sy = 3.0;
+
+void myInit() {
+    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-10.0, 10.0, -10.0, 10.0);
+}
+
+void applyTrans() {
+	glScalef(sx , sy , 1.0f);
+	glRotatef(angle , 0.0f , 0.0f , 1.0f);
+	glTranslatef(tx,ty,1.0f);
+
+}
+
+void display() {
+    glColor3f(0.0, 1.0, 0.0);
+    glBegin(GL_TRIANGLES);
+    for(int i = 0; i < 3; i++)
+        glVertex2f(triangle[i][0],triangle[i][1]);
+    glEnd();
+    glPushMatrix();
+    applyTrans();
+    glColor3f(1.0, 0.0, 1.0);
+    glBegin(GL_TRIANGLES);
+    for(int i = 0; i < 3; i++)
+        glVertex2f(triangle[i][0],triangle[i][1]);
+    glEnd();
+    glPopMatrix();
+    glFlush();
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutInitWindowPosition(1000, 1000);
+    glutCreateWindow("Anirudh : 2D Transformation ");
+    myInit();
+    glutDisplayFunc(display);
+    glutMainLoop();
+    return 0;
+}
